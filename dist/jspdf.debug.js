@@ -12,8 +12,8 @@
 
   /** @preserve
    * jsPDF - PDF Document creation from JavaScript
-   * Version 1.4.0 Built on 2018-05-21T16:49:17.000Z
-   *                           CommitID 48c1917315
+   * Version 1.4.0 Built on 2018-05-31T09:30:44.604Z
+   *                           CommitID 7a1089a7f2
    *
    * Copyright (c) 2010-2016 James Hall <james@parall.ax>, https://github.com/MrRio/jsPDF
    *               2010 Aaron Spike, https://github.com/acspike
@@ -256,33 +256,12 @@
         var precision = options.precision;
         var letterArray = options.pdfColorType === "draw" ? ['G', 'RG', 'K'] : ['g', 'rg', 'k'];
 
-        var cssColorNames = { "aliceblue": "#f0f8ff", "antiquewhite": "#faebd7", "aqua": "#00ffff", "aquamarine": "#7fffd4", "azure": "#f0ffff",
-          "beige": "#f5f5dc", "bisque": "#ffe4c4", "black": "#000000", "blanchedalmond": "#ffebcd", "blue": "#0000ff", "blueviolet": "#8a2be2", "brown": "#a52a2a", "burlywood": "#deb887",
-          "cadetblue": "#5f9ea0", "chartreuse": "#7fff00", "chocolate": "#d2691e", "coral": "#ff7f50", "cornflowerblue": "#6495ed", "cornsilk": "#fff8dc", "crimson": "#dc143c", "cyan": "#00ffff",
-          "darkblue": "#00008b", "darkcyan": "#008b8b", "darkgoldenrod": "#b8860b", "darkgray": "#a9a9a9", "darkgreen": "#006400", "darkkhaki": "#bdb76b", "darkmagenta": "#8b008b", "darkolivegreen": "#556b2f",
-          "darkorange": "#ff8c00", "darkorchid": "#9932cc", "darkred": "#8b0000", "darksalmon": "#e9967a", "darkseagreen": "#8fbc8f", "darkslateblue": "#483d8b", "darkslategray": "#2f4f4f", "darkturquoise": "#00ced1",
-          "darkviolet": "#9400d3", "deeppink": "#ff1493", "deepskyblue": "#00bfff", "dimgray": "#696969", "dodgerblue": "#1e90ff",
-          "firebrick": "#b22222", "floralwhite": "#fffaf0", "forestgreen": "#228b22", "fuchsia": "#ff00ff",
-          "gainsboro": "#dcdcdc", "ghostwhite": "#f8f8ff", "gold": "#ffd700", "goldenrod": "#daa520", "gray": "#808080", "green": "#008000", "greenyellow": "#adff2f",
-          "honeydew": "#f0fff0", "hotpink": "#ff69b4",
-          "indianred ": "#cd5c5c", "indigo": "#4b0082", "ivory": "#fffff0", "khaki": "#f0e68c",
-          "lavender": "#e6e6fa", "lavenderblush": "#fff0f5", "lawngreen": "#7cfc00", "lemonchiffon": "#fffacd", "lightblue": "#add8e6", "lightcoral": "#f08080", "lightcyan": "#e0ffff", "lightgoldenrodyellow": "#fafad2",
-          "lightgrey": "#d3d3d3", "lightgreen": "#90ee90", "lightpink": "#ffb6c1", "lightsalmon": "#ffa07a", "lightseagreen": "#20b2aa", "lightskyblue": "#87cefa", "lightslategray": "#778899", "lightsteelblue": "#b0c4de", "lightyellow": "#ffffe0", "lime": "#00ff00", "limegreen": "#32cd32", "linen": "#faf0e6",
-          "magenta": "#ff00ff", "maroon": "#800000", "mediumaquamarine": "#66cdaa", "mediumblue": "#0000cd", "mediumorchid": "#ba55d3", "mediumpurple": "#9370d8", "mediumseagreen": "#3cb371", "mediumslateblue": "#7b68ee", "mediumspringgreen": "#00fa9a", "mediumturquoise": "#48d1cc", "mediumvioletred": "#c71585", "midnightblue": "#191970", "mintcream": "#f5fffa", "mistyrose": "#ffe4e1", "moccasin": "#ffe4b5",
-          "navajowhite": "#ffdead", "navy": "#000080",
-          "oldlace": "#fdf5e6", "olive": "#808000", "olivedrab": "#6b8e23", "orange": "#ffa500", "orangered": "#ff4500", "orchid": "#da70d6",
-          "palegoldenrod": "#eee8aa", "palegreen": "#98fb98", "paleturquoise": "#afeeee", "palevioletred": "#d87093", "papayawhip": "#ffefd5", "peachpuff": "#ffdab9", "peru": "#cd853f", "pink": "#ffc0cb", "plum": "#dda0dd", "powderblue": "#b0e0e6", "purple": "#800080",
-          "rebeccapurple": "#663399", "red": "#ff0000", "rosybrown": "#bc8f8f", "royalblue": "#4169e1",
-          "saddlebrown": "#8b4513", "salmon": "#fa8072", "sandybrown": "#f4a460", "seagreen": "#2e8b57", "seashell": "#fff5ee", "sienna": "#a0522d", "silver": "#c0c0c0", "skyblue": "#87ceeb", "slateblue": "#6a5acd", "slategray": "#708090", "snow": "#fffafa", "springgreen": "#00ff7f", "steelblue": "#4682b4",
-          "tan": "#d2b48c", "teal": "#008080", "thistle": "#d8bfd8", "tomato": "#ff6347", "turquoise": "#40e0d0",
-          "violet": "#ee82ee",
-          "wheat": "#f5deb3", "white": "#ffffff", "whitesmoke": "#f5f5f5",
-          "yellow": "#ffff00", "yellowgreen": "#9acd32" };
-
-        if (typeof ch1 === "string" && cssColorNames.hasOwnProperty(ch1)) {
-          ch1 = cssColorNames[ch1];
+        if (typeof ch1 === "string" && ch1.charAt(0) !== '#') {
+          var rgbColor = new RGBColor(ch1);
+          if (rgbColor.ok) {
+            ch1 = rgbColor.toHex();
+          }
         }
-
         //convert short rgb to long form
         if (typeof ch1 === "string" && /^#[0-9A-Fa-f]{3}$/.test(ch1)) {
           ch1 = '#' + ch1[1] + ch1[1] + ch1[2] + ch1[2] + ch1[3] + ch1[3];
@@ -994,8 +973,10 @@
        * @param fontStyle {String} can be undefined on "falthy" to indicate "use current"
        * @returns {String} Font key.
        */
-      _getFont = function _getFont(fontName, fontStyle) {
-        var key, fontNameLowerCase;
+      _getFont = function _getFont(fontName, fontStyle, options) {
+        var key = undefined,
+            fontNameLowerCase;
+        options = options || {};
 
         fontName = fontName !== undefined ? fontName : fonts[activeFontKey].fontName;
         fontStyle = fontStyle !== undefined ? fontStyle : fonts[activeFontKey].fontStyle;
@@ -1006,11 +987,12 @@
         } else if (fontmap[fontName] !== undefined && fontmap[fontName][fontStyle] !== undefined) {
           key = fontmap[fontName][fontStyle];
         } else {
-          console.warn("Unable to look up font label for font '" + fontName + "', '" + fontStyle + "'. Refer to getFontList() for available fonts.");
+          if (options.disableWarning === false) {
+            console.warn("Unable to look up font label for font '" + fontName + "', '" + fontStyle + "'. Refer to getFontList() for available fonts.");
+          }
         }
 
-        if (!key) {
-          //throw new Error();
+        if (!key && !options.noFallback) {
           key = fontmap['times'][fontStyle];
           if (key == null) {
             key = fontmap['times']['normal'];
@@ -1539,11 +1521,11 @@
         }
         /**
         Returns a widths of string in a given font, if the font size is set as 1 point.
-         In other words, this is "proportional" value. For 1 unit of font size, the length
+          In other words, this is "proportional" value. For 1 unit of font size, the length
         of the string will be that much.
-         Multiply by font size to get actual width in *points*
+          Multiply by font size to get actual width in *points*
         Then divide by 72 to get inches or divide by (72/25.6) to get 'mm' etc.
-         @public
+          @public
         @function
         @param
         @returns {Type}
@@ -1561,7 +1543,7 @@
         /**
         Returns an array of length matching length of the 'word' string, with each
         cell ocupied by the width of the char in that position.
-         @function
+          @function
         @param word {String}
         @param widths {Object}
         @param kerning {Object}
@@ -2742,10 +2724,6 @@
     }
     return jsPDF;
   }(typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global || Function('return typeof this === "object" && this.content')() || Function('return this')());
-  // `self` is undefined in Firefox for Android content script context
-  // while `this` is nsIContentFrameMessageManager
-  // with an attribute `content` that corresponds to the window
-  
 
   /**
    * jsPDF AcroForm Plugin
@@ -2770,11 +2748,11 @@
 
       /**
       Returns a widths of string in a given font, if the font size is set as 1 point.
-       In other words, this is "proportional" value. For 1 unit of font size, the length
+        In other words, this is "proportional" value. For 1 unit of font size, the length
       of the string will be that much.
-       Multiply by font size to get actual width in *points*
+        Multiply by font size to get actual width in *points*
       Then divide by 72 to get inches or divide by (72/25.6) to get 'mm' etc.
-       @public
+        @public
       @function
       @param
       @returns {Type}
@@ -2792,7 +2770,7 @@
       /**
       Returns an array of length matching length of the 'word' string, with each
       cell ocupied by the width of the char in that position.
-       @function
+        @function
       @param word {String}
       @param widths {Object}
       @param kerning {Object}
@@ -4430,6 +4408,30 @@
           //backwardsCompatibility
           globalObj["AcroForm"] = { Appearance: AcroFormAppearance };
       }
+
+      jsPDFAPI.AcroFormChoiceField = AcroFormChoiceField;
+      jsPDFAPI.AcroFormListBox = AcroFormListBox;
+      jsPDFAPI.AcroFormComboBox = AcroFormComboBox;
+      jsPDFAPI.AcroFormEditBox = AcroFormEditBox;
+      jsPDFAPI.AcroFormButton = AcroFormButton;
+      jsPDFAPI.AcroFormPushButton = AcroFormPushButton;
+      jsPDFAPI.AcroFormRadioButton = AcroFormRadioButton;
+      jsPDFAPI.AcroFormCheckBox = AcroFormCheckBox;
+      jsPDFAPI.AcroFormTextField = AcroFormTextField;
+      jsPDFAPI.AcroFormPasswordField = AcroFormPasswordField;
+
+      jsPDFAPI.AcroForm = {
+          ChoiceField: AcroFormChoiceField,
+          ListBox: AcroFormListBox,
+          ComboBox: AcroFormComboBox,
+          EditBox: AcroFormEditBox,
+          Button: AcroFormButton,
+          PushButton: AcroFormPushButton,
+          RadioButton: AcroFormRadioButton,
+          CheckBox: AcroFormCheckBox,
+          TextField: AcroFormTextField,
+          PasswordField: AcroFormPasswordField
+      };
   })(jsPDF.API, typeof window !== "undefined" && window || typeof global !== "undefined" && global);
 
   /**
@@ -4950,8 +4952,21 @@
    **/
   	jsPDFAPI.validateStringAsBase64 = function (possibleBase64String) {
   		possibleBase64String = possibleBase64String || '';
-  		var base64Regex = new RegExp('(?:^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$)');
-  		return base64Regex.test(possibleBase64String);
+
+  		var result = true;
+
+  		if (possibleBase64String.length % 4 !== 0) {
+  			result = false;
+  		}
+
+  		if (/[A-Za-z0-9\/]+/.test(possibleBase64String.substr(0, possibleBase64String.length - 2)) === false) {
+  			result = false;
+  		}
+
+  		if (/[A-Za-z0-9\/][A-Za-z0-9+\/]|[A-Za-z0-9+\/]=|==/.test(possibleBase64String.substr(-2)) === false) {
+  			result = false;
+  		}
+  		return result;
   	};
 
   	/**
@@ -5382,24 +5397,9 @@
   			}
   		};
 
-  		var nodeJSMethod = function nodeJSMethod(path, sync, callback) {
-  			sync = sync || true;
-  			var fs = require('fs');
-  			if (sync === true) {
-  				var data = fs.readFileSync(path).toString();
-  				return data;
-  			} else {
-  				fs.readFile('image.jpg', function (err, data) {
-  					callback(data);
-  				});
-  			}
-  		};
-
   		//we have a browser and probably no CORS-Problem
   		if ((typeof window === 'undefined' ? 'undefined' : _typeof(window)) !== undefined && (typeof location === 'undefined' ? 'undefined' : _typeof(location)) === "object" && location.protocol.substr(0, 4) === "http") {
   			return xhrMethod(path, sync, callback);
-  		} else if (isNode) {
-  			return nodeJSMethod(path, sync, callback);
   		}
   	};
 
@@ -6073,7 +6073,7 @@
   			this.pdf.context2d._canvas = this;
   			return this.pdf.context2d;
   		},
-  		style: {}
+  		childNodes: []
   	};
 
   	Object.defineProperty(jsPDFAPI.canvas, 'width', {
@@ -6270,7 +6270,7 @@
        * @param {Integer} [y] top-position for top-left corner of table
        * @param {Object[]} [data] As array of objects containing key-value pairs corresponding to a row of data.
        * @param {String[]} [headers] Omit or null to auto-generate headers at a performance cost
-        * @param {Object} [config.printHeaders] True to print column headers at the top of every page
+         * @param {Object} [config.printHeaders] True to print column headers at the top of every page
        * @param {Object} [config.autoSize] True to dynamically set the column widths to match the widest cell value
        * @param {Object} [config.margins] margin values for left, top, bottom, and width
        * @param {Object} [config.fontSize] Integer fontSize to use (optional)
@@ -6615,6 +6615,8 @@
           _getRGBA: function _getRGBA(style) {
               // get the decimal values of r, g, and b;
               var r, g, b, a;
+              var rgbColor = new RGBColor(style);
+
               if (!style) {
                   return { r: 0, g: 0, b: 0, a: 0, style: style };
               }
@@ -6641,8 +6643,9 @@
                       } else {
                           a = 1;
                           if (style.charAt(0) != '#') {
-                              style = CssColors.colorNameToHex(style);
-                              if (!style) {
+                              if (rgbColor.ok) {
+                                  style = rgbColor.toHex();
+                              } else {
                                   style = '#000000';
                               }
                           }
@@ -6844,45 +6847,30 @@
                           this.pdf.setFontStyle('normal');
                       }
                   }
-
-                  var name = fontFamily;
-                  var parts = name.toLowerCase().split(/\s*,\s*/);
-                  var jsPdfFontName;
-
-                  if (parts.indexOf('arial') != -1) {
-                      jsPdfFontName = 'Arial';
-                  } else if (parts.indexOf('verdana') != -1) {
-                      jsPdfFontName = 'Verdana';
-                  } else if (parts.indexOf('helvetica') != -1) {
-                      jsPdfFontName = 'Helvetica';
-                  } else if (parts.indexOf('sans-serif') != -1) {
-                      jsPdfFontName = 'sans-serif';
-                  } else if (parts.indexOf('fixed') != -1) {
-                      jsPdfFontName = 'Fixed';
-                  } else if (parts.indexOf('monospace') != -1) {
-                      jsPdfFontName = 'Monospace';
-                  } else if (parts.indexOf('terminal') != -1) {
-                      jsPdfFontName = 'Terminal';
-                  } else if (parts.indexOf('courier') != -1) {
-                      jsPdfFontName = 'Courier';
-                  } else if (parts.indexOf('times') != -1) {
-                      jsPdfFontName = 'Times';
-                  } else if (parts.indexOf('cursive') != -1) {
-                      jsPdfFontName = 'Cursive';
-                  } else if (parts.indexOf('fantasy') != -1) {
-                      jsPdfFontName = 'Fantasy';
-                  } else if (parts.indexOf('serif') != -1) {
-                      jsPdfFontName = 'Serif';
-                  } else {
-                      jsPdfFontName = 'Serif';
-                  }
-
-                  //TODO check more cases
                   var style;
-                  if ('bold' === fontWeight) {
-                      style = 'bold';
+                  if ('bold' === fontWeight || fontWeight === '700') {
+                      style = fontStyle === 'italic' ? 'bolditalic' : 'bold';
+                  } else if (fontStyle === 'italic') {
+                      style = 'italic';
                   } else {
                       style = 'normal';
+                  }
+
+                  var parts = fontFamily.toLowerCase().split(/\s*,\s*/);
+                  var jsPdfFontName = 'Times';
+
+                  for (var i = 0; i < parts.length; i++) {
+                      if (this.pdf.internal.getFont(parts[i], style, { noFallback: true, disableWarning: true }) !== undefined) {
+                          jsPdfFontName = parts[i];
+                          break;
+                      } else if (style === 'bolditalic' && this.pdf.internal.getFont(parts[i], 'bold', { noFallback: true, disableWarning: true }) !== undefined) {
+                          jsPdfFontName = parts[i];
+                          style = 'bold';
+                      } else if (this.pdf.internal.getFont(parts[i], 'normal', { noFallback: true, disableWarning: true }) !== undefined) {
+                          jsPdfFontName = parts[i];
+                          style = 'normal';
+                          break;
+                      }
                   }
 
                   this.pdf.setFont(jsPdfFontName, style);
@@ -6974,8 +6962,7 @@
           },
 
           transform: function transform(a, b, c, d, e, f) {
-              //TODO apply to current transformation instead of replacing
-              this.ctx._transform = [a, b, c, d, e, f];
+              this.ctx._transform = this._matrix_multiply(this.ctx._transform, [a, b, c, d, e, f]);
           },
 
           setTransform: function setTransform(a, b, c, d, e, f) {
@@ -7349,7 +7336,9 @@
                               moves.push({ start: { x: 0, y: 0 }, deltas: [], abs: [] });
                           }
                           moves[moves.length - 1].arc = true;
-                          moves[moves.length - 1].abs.push(pt);
+                          if (Array.isArray(moves[moves.length - 1].abs)) {
+                              moves[moves.length - 1].abs.push(pt);
+                          }
                           break;
                       case 'close':
                           break;
@@ -7442,6 +7431,7 @@
               //     this._fill(fillRule, true);
               //     this.ctx._clip_path = this.path;
               //     this.path = oldPath;
+              //     lines.push('Q');
               // }
 
               var moves = [];
@@ -7542,7 +7532,9 @@
                               moves.push({ deltas: [], abs: [] });
                           }
                           moves[moves.length - 1].arc = true;
-                          moves[moves.length - 1].abs.push(pt);
+                          if (Array.isArray(moves[moves.length - 1].abs)) {
+                              moves[moves.length - 1].abs.push(pt);
+                          }
                           break;
                       case 'close':
                           moves.push({ close: true });
@@ -7782,6 +7774,11 @@
               return this.ctx.globalAlpha;
           }
       });
+      Object.defineProperty(c2d, 'canvas', {
+          get: function get() {
+              return { parentNode: false, style: false };
+          }
+      });
       // Not HTML API
       Object.defineProperty(c2d, 'ignoreClearRect', {
           set: function set(value) {
@@ -7988,6 +7985,7 @@
           this.globalCompositeOperation = 'normal';
           this.globalAlpha = 1.0;
           this._clip_path = [];
+
           // TODO miter limit //default 10
 
           // Not HTML API
@@ -8018,7 +8016,7 @@
       }
 
       return this;
-  })(jsPDF.API);
+  })(jsPDF.API, typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global || Function('return typeof this === "object" && this.content')() || Function('return this')());
 
   /** @preserve
    * jsPDF fromHTML plugin. BETA stage. API subject to change. Needs browser
@@ -8131,7 +8129,7 @@
   			"x-large": 23,
   			"xx-large": 28,
   			auto: 0
-  		}[{ css_line_height_string: css_line_height_string }];
+  		}[css_line_height_string];
 
   		if (value !== undef) {
   			return UnitedNumberMap[css_line_height_string] = value / normal;
@@ -8140,7 +8138,7 @@
   			return UnitedNumberMap[css_line_height_string] = value / normal;
   		}
   		value = css_line_height_string.match(/([\d\.]+)(px)/);
-  		if (value.length === 3) {
+  		if (Array.isArray(value) && value.length === 3) {
   			return UnitedNumberMap[css_line_height_string] = parseFloat(value[1]) / normal;
   		}
   		return UnitedNumberMap[css_line_height_string] = 1;
@@ -8782,6 +8780,7 @@
   		var textColor;
   		var r, g, b;
 
+  		var rgbColor = new RGBColor(style);
   		var rx = /rgb\s*\(\s*(\d+),\s*(\d+),\s*(\d+\s*)\)/;
   		var m = rx.exec(style);
   		if (m != null) {
@@ -8790,8 +8789,9 @@
   			b = parseInt(m[3]);
   		} else {
   			if (style.charAt(0) != '#') {
-  				style = CssColors.colorNameToHex(style);
-  				if (!style) {
+  				if (rgbColor.ok) {
+  					style = rgbColor.toHex();
+  				} else {
   					style = '#000000';
   				}
   			}
@@ -9296,13 +9296,18 @@
     *
     Color    Allowed      Interpretation
     Type     Bit Depths
-   	   0       1,2,4,8,16  Each pixel is a grayscale sample.
-   	   2       8,16        Each pixel is an R,G,B triple.
-   	   3       1,2,4,8     Each pixel is a palette index;
+   
+      0       1,2,4,8,16  Each pixel is a grayscale sample.
+   
+      2       8,16        Each pixel is an R,G,B triple.
+   
+      3       1,2,4,8     Each pixel is a palette index;
                           a PLTE chunk must appear.
-   	   4       8,16        Each pixel is a grayscale sample,
+   
+      4       8,16        Each pixel is a grayscale sample,
                           followed by an alpha sample.
-   	   6       8,16        Each pixel is an R,G,B triple,
+   
+      6       8,16        Each pixel is an R,G,B triple,
                           followed by an alpha sample.
    */
 
@@ -9610,7 +9615,8 @@
   		    smask;
 
   		/*	if(this.isString(imageData)) {
-    		}*/
+    
+    	}*/
 
   		if (this.isArrayBuffer(imageData)) imageData = new Uint8Array(imageData);
 
@@ -10077,11 +10083,14 @@
   	};
   	/**
    Returns a widths of string in a given font, if the font size is set as 1 point.
-   	In other words, this is "proportional" value. For 1 unit of font size, the length
+   
+   In other words, this is "proportional" value. For 1 unit of font size, the length
    of the string will be that much.
-   	Multiply by font size to get actual width in *points*
+   
+   Multiply by font size to get actual width in *points*
    Then divide by 72 to get inches or divide by (72/25.6) to get 'mm' etc.
-   	@public
+   
+   @public
    @function
    @param
    @returns {Type}
@@ -10232,9 +10241,11 @@
    (in measurement units declared as default for the jsPDF instance)
    and the font's "widths" and "Kerning" tables, where available, to
    determine display length of a given string for a given font.
-   	We use character's 100% of unit size (height) as width when Width
+   
+   We use character's 100% of unit size (height) as width when Width
    table or other default width is not available.
-   	@public
+   
+   @public
    @function
    @param text {String} Unencoded, regular JavaScript (Unicode, UTF-16 / UCS-2) string.
    @param size {Number} Nominal number, measured in units default to this instance of jsPDF.
@@ -14119,169 +14130,314 @@
   // with an attribute `content` that corresponds to the window
 
   /**
-   * CssColors
-   * Copyright (c) 2014 Steven Spungin (TwelveTone LLC)  steven@twelvetone.tv
-   *
-   * Licensed under the MIT License.
-   * http://opensource.org/licenses/mit-license
+   * A class to parse color values
+   * @author Stoyan Stefanov <sstoo@gmail.com>
+   * @link   http://www.phpied.com/rgb-color-parser-in-javascript/
+   * @license Use it if you like it
    */
+   
+  (function ( global ) {
+   
+  	function RGBColor(color_string)
+  	{
+  		this.ok = false;
 
-  /**
-   * Usage CssColors('red');
-   * Returns RGB hex color with '#' prefix
-   */
+  		// strip any leading #
+  		if (color_string.charAt(0) == '#') { // remove # if any
+  			color_string = color_string.substr(1,6);
+  		}
 
-  var CssColors = {};
-  CssColors._colorsTable = {
-  	"aliceblue" : "#f0f8ff",
-  	"antiquewhite" : "#faebd7",
-  	"aqua" : "#00ffff",
-  	"aquamarine" : "#7fffd4",
-  	"azure" : "#f0ffff",
-  	"beige" : "#f5f5dc",
-  	"bisque" : "#ffe4c4",
-  	"black" : "#000000",
-  	"blanchedalmond" : "#ffebcd",
-  	"blue" : "#0000ff",
-  	"blueviolet" : "#8a2be2",
-  	"brown" : "#a52a2a",
-  	"burlywood" : "#deb887",
-  	"cadetblue" : "#5f9ea0",
-  	"chartreuse" : "#7fff00",
-  	"chocolate" : "#d2691e",
-  	"coral" : "#ff7f50",
-  	"cornflowerblue" : "#6495ed",
-  	"cornsilk" : "#fff8dc",
-  	"crimson" : "#dc143c",
-  	"cyan" : "#00ffff",
-  	"darkblue" : "#00008b",
-  	"darkcyan" : "#008b8b",
-  	"darkgoldenrod" : "#b8860b",
-  	"darkgray" : "#a9a9a9",
-  	"darkgreen" : "#006400",
-  	"darkkhaki" : "#bdb76b",
-  	"darkmagenta" : "#8b008b",
-  	"darkolivegreen" : "#556b2f",
-  	"darkorange" : "#ff8c00",
-  	"darkorchid" : "#9932cc",
-  	"darkred" : "#8b0000",
-  	"darksalmon" : "#e9967a",
-  	"darkseagreen" : "#8fbc8f",
-  	"darkslateblue" : "#483d8b",
-  	"darkslategray" : "#2f4f4f",
-  	"darkturquoise" : "#00ced1",
-  	"darkviolet" : "#9400d3",
-  	"deeppink" : "#ff1493",
-  	"deepskyblue" : "#00bfff",
-  	"dimgray" : "#696969",
-  	"dodgerblue" : "#1e90ff",
-  	"firebrick" : "#b22222",
-  	"floralwhite" : "#fffaf0",
-  	"forestgreen" : "#228b22",
-  	"fuchsia" : "#ff00ff",
-  	"gainsboro" : "#dcdcdc",
-  	"ghostwhite" : "#f8f8ff",
-  	"gold" : "#ffd700",
-  	"goldenrod" : "#daa520",
-  	"gray" : "#808080",
-  	"green" : "#008000",
-  	"greenyellow" : "#adff2f",
-  	"honeydew" : "#f0fff0",
-  	"hotpink" : "#ff69b4",
-  	"indianred " : "#cd5c5c",
-  	"indigo" : "#4b0082",
-  	"ivory" : "#fffff0",
-  	"khaki" : "#f0e68c",
-  	"lavender" : "#e6e6fa",
-  	"lavenderblush" : "#fff0f5",
-  	"lawngreen" : "#7cfc00",
-  	"lemonchiffon" : "#fffacd",
-  	"lightblue" : "#add8e6",
-  	"lightcoral" : "#f08080",
-  	"lightcyan" : "#e0ffff",
-  	"lightgoldenrodyellow" : "#fafad2",
-  	"lightgrey" : "#d3d3d3",
-  	"lightgreen" : "#90ee90",
-  	"lightpink" : "#ffb6c1",
-  	"lightsalmon" : "#ffa07a",
-  	"lightseagreen" : "#20b2aa",
-  	"lightskyblue" : "#87cefa",
-  	"lightslategray" : "#778899",
-  	"lightsteelblue" : "#b0c4de",
-  	"lightyellow" : "#ffffe0",
-  	"lime" : "#00ff00",
-  	"limegreen" : "#32cd32",
-  	"linen" : "#faf0e6",
-  	"magenta" : "#ff00ff",
-  	"maroon" : "#800000",
-  	"mediumaquamarine" : "#66cdaa",
-  	"mediumblue" : "#0000cd",
-  	"mediumorchid" : "#ba55d3",
-  	"mediumpurple" : "#9370d8",
-  	"mediumseagreen" : "#3cb371",
-  	"mediumslateblue" : "#7b68ee",
-  	"mediumspringgreen" : "#00fa9a",
-  	"mediumturquoise" : "#48d1cc",
-  	"mediumvioletred" : "#c71585",
-  	"midnightblue" : "#191970",
-  	"mintcream" : "#f5fffa",
-  	"mistyrose" : "#ffe4e1",
-  	"moccasin" : "#ffe4b5",
-  	"navajowhite" : "#ffdead",
-  	"navy" : "#000080",
-  	"oldlace" : "#fdf5e6",
-  	"olive" : "#808000",
-  	"olivedrab" : "#6b8e23",
-  	"orange" : "#ffa500",
-  	"orangered" : "#ff4500",
-  	"orchid" : "#da70d6",
-  	"palegoldenrod" : "#eee8aa",
-  	"palegreen" : "#98fb98",
-  	"paleturquoise" : "#afeeee",
-  	"palevioletred" : "#d87093",
-  	"papayawhip" : "#ffefd5",
-  	"peachpuff" : "#ffdab9",
-  	"peru" : "#cd853f",
-  	"pink" : "#ffc0cb",
-  	"plum" : "#dda0dd",
-  	"powderblue" : "#b0e0e6",
-  	"purple" : "#800080",
-  	"red" : "#ff0000",
-  	"rosybrown" : "#bc8f8f",
-  	"royalblue" : "#4169e1",
-  	"saddlebrown" : "#8b4513",
-  	"salmon" : "#fa8072",
-  	"sandybrown" : "#f4a460",
-  	"seagreen" : "#2e8b57",
-  	"seashell" : "#fff5ee",
-  	"sienna" : "#a0522d",
-  	"silver" : "#c0c0c0",
-  	"skyblue" : "#87ceeb",
-  	"slateblue" : "#6a5acd",
-  	"slategray" : "#708090",
-  	"snow" : "#fffafa",
-  	"springgreen" : "#00ff7f",
-  	"steelblue" : "#4682b4",
-  	"tan" : "#d2b48c",
-  	"teal" : "#008080",
-  	"thistle" : "#d8bfd8",
-  	"tomato" : "#ff6347",
-  	"turquoise" : "#40e0d0",
-  	"violet" : "#ee82ee",
-  	"wheat" : "#f5deb3",
-  	"white" : "#ffffff",
-  	"whitesmoke" : "#f5f5f5",
-  	"yellow" : "#ffff00",
-  	"yellowgreen" : "#9acd32"
-  };
+  		color_string = color_string.replace(/ /g,'');
+  		color_string = color_string.toLowerCase();
 
-  CssColors.colorNameToHex = function(color) {
-  	color = color.toLowerCase();
-  	if (typeof this._colorsTable[color] != 'undefined')
-  		return this._colorsTable[color];
+  		var channels;
 
-  	return false;
-  };
+  		// before getting into regexps, try simple matches
+  		// and overwrite the input
+  		var simple_colors = {
+  			aliceblue: 'f0f8ff',
+  			antiquewhite: 'faebd7',
+  			aqua: '00ffff',
+  			aquamarine: '7fffd4',
+  			azure: 'f0ffff',
+  			beige: 'f5f5dc',
+  			bisque: 'ffe4c4',
+  			black: '000000',
+  			blanchedalmond: 'ffebcd',
+  			blue: '0000ff',
+  			blueviolet: '8a2be2',
+  			brown: 'a52a2a',
+  			burlywood: 'deb887',
+  			cadetblue: '5f9ea0',
+  			chartreuse: '7fff00',
+  			chocolate: 'd2691e',
+  			coral: 'ff7f50',
+  			cornflowerblue: '6495ed',
+  			cornsilk: 'fff8dc',
+  			crimson: 'dc143c',
+  			cyan: '00ffff',
+  			darkblue: '00008b',
+  			darkcyan: '008b8b',
+  			darkgoldenrod: 'b8860b',
+  			darkgray: 'a9a9a9',
+  			darkgreen: '006400',
+  			darkkhaki: 'bdb76b',
+  			darkmagenta: '8b008b',
+  			darkolivegreen: '556b2f',
+  			darkorange: 'ff8c00',
+  			darkorchid: '9932cc',
+  			darkred: '8b0000',
+  			darksalmon: 'e9967a',
+  			darkseagreen: '8fbc8f',
+  			darkslateblue: '483d8b',
+  			darkslategray: '2f4f4f',
+  			darkturquoise: '00ced1',
+  			darkviolet: '9400d3',
+  			deeppink: 'ff1493',
+  			deepskyblue: '00bfff',
+  			dimgray: '696969',
+  			dodgerblue: '1e90ff',
+  			feldspar: 'd19275',
+  			firebrick: 'b22222',
+  			floralwhite: 'fffaf0',
+  			forestgreen: '228b22',
+  			fuchsia: 'ff00ff',
+  			gainsboro: 'dcdcdc',
+  			ghostwhite: 'f8f8ff',
+  			gold: 'ffd700',
+  			goldenrod: 'daa520',
+  			gray: '808080',
+  			green: '008000',
+  			greenyellow: 'adff2f',
+  			honeydew: 'f0fff0',
+  			hotpink: 'ff69b4',
+  			indianred : 'cd5c5c',
+  			indigo : '4b0082',
+  			ivory: 'fffff0',
+  			khaki: 'f0e68c',
+  			lavender: 'e6e6fa',
+  			lavenderblush: 'fff0f5',
+  			lawngreen: '7cfc00',
+  			lemonchiffon: 'fffacd',
+  			lightblue: 'add8e6',
+  			lightcoral: 'f08080',
+  			lightcyan: 'e0ffff',
+  			lightgoldenrodyellow: 'fafad2',
+  			lightgrey: 'd3d3d3',
+  			lightgreen: '90ee90',
+  			lightpink: 'ffb6c1',
+  			lightsalmon: 'ffa07a',
+  			lightseagreen: '20b2aa',
+  			lightskyblue: '87cefa',
+  			lightslateblue: '8470ff',
+  			lightslategray: '778899',
+  			lightsteelblue: 'b0c4de',
+  			lightyellow: 'ffffe0',
+  			lime: '00ff00',
+  			limegreen: '32cd32',
+  			linen: 'faf0e6',
+  			magenta: 'ff00ff',
+  			maroon: '800000',
+  			mediumaquamarine: '66cdaa',
+  			mediumblue: '0000cd',
+  			mediumorchid: 'ba55d3',
+  			mediumpurple: '9370d8',
+  			mediumseagreen: '3cb371',
+  			mediumslateblue: '7b68ee',
+  			mediumspringgreen: '00fa9a',
+  			mediumturquoise: '48d1cc',
+  			mediumvioletred: 'c71585',
+  			midnightblue: '191970',
+  			mintcream: 'f5fffa',
+  			mistyrose: 'ffe4e1',
+  			moccasin: 'ffe4b5',
+  			navajowhite: 'ffdead',
+  			navy: '000080',
+  			oldlace: 'fdf5e6',
+  			olive: '808000',
+  			olivedrab: '6b8e23',
+  			orange: 'ffa500',
+  			orangered: 'ff4500',
+  			orchid: 'da70d6',
+  			palegoldenrod: 'eee8aa',
+  			palegreen: '98fb98',
+  			paleturquoise: 'afeeee',
+  			palevioletred: 'd87093',
+  			papayawhip: 'ffefd5',
+  			peachpuff: 'ffdab9',
+  			peru: 'cd853f',
+  			pink: 'ffc0cb',
+  			plum: 'dda0dd',
+  			powderblue: 'b0e0e6',
+  			purple: '800080',
+  			red: 'ff0000',
+  			rosybrown: 'bc8f8f',
+  			royalblue: '4169e1',
+  			saddlebrown: '8b4513',
+  			salmon: 'fa8072',
+  			sandybrown: 'f4a460',
+  			seagreen: '2e8b57',
+  			seashell: 'fff5ee',
+  			sienna: 'a0522d',
+  			silver: 'c0c0c0',
+  			skyblue: '87ceeb',
+  			slateblue: '6a5acd',
+  			slategray: '708090',
+  			snow: 'fffafa',
+  			springgreen: '00ff7f',
+  			steelblue: '4682b4',
+  			tan: 'd2b48c',
+  			teal: '008080',
+  			thistle: 'd8bfd8',
+  			tomato: 'ff6347',
+  			turquoise: '40e0d0',
+  			violet: 'ee82ee',
+  			violetred: 'd02090',
+  			wheat: 'f5deb3',
+  			white: 'ffffff',
+  			whitesmoke: 'f5f5f5',
+  			yellow: 'ffff00',
+  			yellowgreen: '9acd32'
+  		};
+  		for (var key in simple_colors) {
+  			if (color_string == key) {
+  				color_string = simple_colors[key];
+  			}
+  		}
+  		// emd of simple type-in colors
+
+  		// array of color definition objects
+  		var color_defs = [
+  			{
+  				re: /^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/,
+  				example: ['rgb(123, 234, 45)', 'rgb(255,234,245)'],
+  				process: function (bits){
+  					return [
+  						parseInt(bits[1]),
+  						parseInt(bits[2]),
+  						parseInt(bits[3])
+  					];
+  				}
+  			},
+  			{
+  				re: /^(\w{2})(\w{2})(\w{2})$/,
+  				example: ['#00ff00', '336699'],
+  				process: function (bits){
+  					return [
+  						parseInt(bits[1], 16),
+  						parseInt(bits[2], 16),
+  						parseInt(bits[3], 16)
+  					];
+  				}
+  			},
+  			{
+  				re: /^(\w{1})(\w{1})(\w{1})$/,
+  				example: ['#fb0', 'f0f'],
+  				process: function (bits){
+  					return [
+  						parseInt(bits[1] + bits[1], 16),
+  						parseInt(bits[2] + bits[2], 16),
+  						parseInt(bits[3] + bits[3], 16)
+  					];
+  				}
+  			}
+  		];
+
+  		// search through the definitions to find a match
+  		for (var i = 0; i < color_defs.length; i++) {
+  			var re = color_defs[i].re;
+  			var processor = color_defs[i].process;
+  			var bits = re.exec(color_string);
+  			if (bits) {
+  				channels = processor(bits);
+  				this.r = channels[0];
+  				this.g = channels[1];
+  				this.b = channels[2];
+  				this.ok = true;
+  			}
+
+  		}
+
+  		// validate/cleanup values
+  		this.r = (this.r < 0 || isNaN(this.r)) ? 0 : ((this.r > 255) ? 255 : this.r);
+  		this.g = (this.g < 0 || isNaN(this.g)) ? 0 : ((this.g > 255) ? 255 : this.g);
+  		this.b = (this.b < 0 || isNaN(this.b)) ? 0 : ((this.b > 255) ? 255 : this.b);
+
+  		// some getters
+  		this.toRGB = function () {
+  			return 'rgb(' + this.r + ', ' + this.g + ', ' + this.b + ')';
+  		};
+  		this.toHex = function () {
+  			var r = this.r.toString(16);
+  			var g = this.g.toString(16);
+  			var b = this.b.toString(16);
+  			if (r.length == 1) r = '0' + r;
+  			if (g.length == 1) g = '0' + g;
+  			if (b.length == 1) b = '0' + b;
+  			return '#' + r + g + b;
+  		};
+
+  		// help
+  		this.getHelpXML = function () {
+
+  			var examples = new Array();
+  			// add regexps
+  			for (var i = 0; i < color_defs.length; i++) {
+  				var example = color_defs[i].example;
+  				for (var j = 0; j < example.length; j++) {
+  					examples[examples.length] = example[j];
+  				}
+  			}
+  			// add type-in colors
+  			for (var sc in simple_colors) {
+  				examples[examples.length] = sc;
+  			}
+
+  			var xml = document.createElement('ul');
+  			xml.setAttribute('id', 'rgbcolor-examples');
+  			for (var i = 0; i < examples.length; i++) {
+  				try {
+  					var list_item = document.createElement('li');
+  					var list_color = new RGBColor(examples[i]);
+  					var example_div = document.createElement('div');
+  					example_div.style.cssText =
+  							'margin: 3px; '
+  							+ 'border: 1px solid black; '
+  							+ 'background:' + list_color.toHex() + '; '
+  							+ 'color:' + list_color.toHex()
+  					;
+  					example_div.appendChild(document.createTextNode('test'));
+  					var list_item_value = document.createTextNode(
+  						' ' + examples[i] + ' -> ' + list_color.toRGB() + ' -> ' + list_color.toHex()
+  					);
+  					list_item.appendChild(example_div);
+  					list_item.appendChild(list_item_value);
+  					xml.appendChild(list_item);
+
+  				} catch(e){}
+  			}
+  			return xml;
+
+  		};
+
+  	}
+
+      // export as AMD...
+      if ( typeof define !== 'undefined' && define.amd ) {
+          define('RGBColor', function () { return RGBColor; });
+      }
+
+      // ...or as browserify
+      else if (typeof module !== 'undefined' && module.exports ) {
+          module.exports = RGBColor;
+      }
+
+      global.RGBColor = RGBColor;
+  	
+  }(typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global ||  Function('return typeof this === "object" && this.content')() || Function('return this')()));
+  // `self` is undefined in Firefox for Android content script context
+  // while `this` is nsIContentFrameMessageManager
+  // with an attribute `content` that corresponds to the window
 
   /*
     html2canvas 0.5.0-beta3 <http://html2canvas.hertzen.com>
@@ -14779,7 +14935,8 @@
   	// like the following:
   	if (
   		typeof define == 'function' &&
-  		typeof define.amd == 'object' && define.amd && false
+  		typeof define.amd == 'object' &&
+  		define.amd
   	) {
   		define('punycode', function() {
   			return punycode;
@@ -15243,7 +15400,7 @@
 
   module.exports = html2canvasExport;
 
-  if (typeof(define) === 'function' && define.amd && false) {
+  if (typeof(define) === 'function' && define.amd) {
       define('html2canvas', [], function() {
           return html2canvasExport;
       });
@@ -16533,7 +16690,7 @@
 
       this.renderer.clip(container.parent.clip, function() {
           textList.map(this.parseTextBounds(container), this).forEach(function(bounds, index) {
-              if (bounds) {
+              if (bounds && /^\s*$/.test(textList[index]) === false) {
                   this.renderer.text(textList[index], bounds.left, bounds.bottom);
                   this.renderTextDecoration(container.parent, bounds, this.fontMetrics.getMetrics(family, size));
               }
@@ -19535,7 +19692,7 @@
       var APNG_BLEND_OP_SOURCE, APNG_DISPOSE_OP_BACKGROUND, APNG_DISPOSE_OP_PREVIOUS, makeImage, scratchCanvas, scratchCtx;
 
       PNG.load = function(url, canvas, callback) {
-        var xhr;
+        var xhr;
         if (typeof canvas === 'function') {
           callback = canvas;
         }
@@ -20701,6 +20858,7 @@
               return this.replace(/\s+$/g, "");
           };
       }
+
 
   }(typeof self !== "undefined" && self || typeof window !== "undefined" && window || typeof global !== "undefined" && global ||  Function('return typeof this === "object" && this.content')() || Function('return this')()));
   // `self` is undefined in Firefox for Android content script context
